@@ -4,4 +4,4 @@
  addresses the need for an affordable and efficient solution by
  developing a fire alarm system using Arduino, integrating
  temperature and gas sensors for real-time fire detection and
- timely alerts
+ timely alerts. The gerber files of this project is attached in the given project report.
