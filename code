@@ -1,0 +1,52 @@
+C O D E
+
+float temp;
+float vout;
+int LED = 13;
+int gasSensor;
+int piezo = 7;
+void setup() {
+pinMode(A0, INPUT); // TMP36 Temperature sensor
+pinMode(A1, INPUT); // Gas sensor
+pinMode(LED, OUTPUT);
+pinMode(piezo, OUTPUT);
+Serial.begin(9600);
+}
+void loop() {
+// Read TMP36 sensor
+vout = analogRead(A0);
+temp = (vout * 5.0 / 1023.0 - 0.5) * 100;
+// Read gas sensor
+gasSensor = analogRead(A1);
+// LED and buzzer for high temperature
+if (temp >= 80) {
+digitalWrite(LED, HIGH);
+tone(piezo, 2000); // High-pitched tone for high temperature
+delay(500);
+digitalWrite(LED, LOW);
+noTone(piezo);
+delay(500); // Blink every 1 second
+}
+// LED and buzzer for gas detection
+else if (gasSensor >= 100) {
+digitalWrite(LED, HIGH);
+tone(piezo, 1500); // Tone for gas detection
+delay(500);
+digitalWrite(LED, LOW);
+noTone(piezo);
+delay(500); // Blink every 1 second
+}
+else {
+digitalWrite(LED, LOW); // Turn off LED if no alerts
+noTone(piezo); // Stop buzzer
+}
+
+// Debug output
+Serial.print("Temperature (C): ");
+Serial.print(temp);
+Serial.print("\t");
+Serial.print("Gas Sensor: ");
+Serial.print(gasSensor);
+Serial.println();
+delay(100); // Short delay for smooth loop execution
+}
